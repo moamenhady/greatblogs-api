@@ -2,9 +2,7 @@ package dev.moamenhady.greatblogsapi.author;
 
 import dev.moamenhady.greatblogsapi.post.Post;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 import java.util.Set;
 
@@ -15,15 +13,27 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
+    @Column(unique = true)
+    @NotBlank(message = "username can't be blank")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{5,20}$", message = "username is not valid")
     private String username;
+
+    @NotBlank(message = "password can't be blank")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&^#()\\[\\]{}<>/|+=_~`.,:;\"'\\\\-])" +
+            "[A-Za-z\\d@$!%*?&^#()\\[\\]{}<>/|+=_~`.,:;\"'\\\\-]{8,}$",
+            message = "password is not valid")
     private String password;
-    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
-            flags = Pattern.Flag.CASE_INSENSITIVE)
-    @NotNull
+
+    @NotBlank(message = "email can't be blank")
+    @Email(message = "email address is not valid")
     private String email;
+
     private String fullName;
+
+    @Lob
     private String about;
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Post> posts;
 
