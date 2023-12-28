@@ -2,9 +2,10 @@ package dev.moamenhady.greatblogsapi.post;
 
 import dev.moamenhady.greatblogsapi.author.Author;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Post {
@@ -12,21 +13,29 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
-    @NotNull
+
+    @NotBlank(message = "title can't be blank")
+    @Size(max = 255, message = "title can't exceed 255 characters")
     private String title;
-    @NotNull
+
+    @Lob
+    @NotBlank(message = "content can't be blank")
+    @Size(min = 1000, message = "content can't be less than 1000 characters")
     private String content;
+
+    @Column(updatable = false)
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     public Post() {
     }
 
-    public Post(Long id, Author author, String title, String content, Date createdAt) {
+    public Post(Long id, Author author, String title, String content, LocalDateTime createdAt) {
         this.id = id;
         this.author = author;
         this.title = title;
@@ -66,11 +75,11 @@ public class Post {
         this.title = title;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }
