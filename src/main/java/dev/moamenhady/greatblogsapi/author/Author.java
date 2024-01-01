@@ -7,6 +7,8 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 import java.util.Set;
 
+import static jakarta.persistence.FetchType.EAGER;
+
 
 @Entity
 public class Author {
@@ -35,7 +37,7 @@ public class Author {
     @Lob
     private String about;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = EAGER)
     private Set<Post> posts;
 
     public Author() {
