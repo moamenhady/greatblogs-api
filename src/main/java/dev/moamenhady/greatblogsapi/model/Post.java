@@ -1,6 +1,5 @@
-package dev.moamenhady.greatblogsapi.post;
+package dev.moamenhady.greatblogsapi.model;
 
-import dev.moamenhady.greatblogsapi.author.Author;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,7 +22,7 @@ public class Post {
     @Size(max = 255, message = "title can't exceed 255 characters")
     private String title;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     @NotBlank(message = "content can't be blank")
     @Size(min = 1000, message = "content can't be less than 1000 characters")
     private String content;
