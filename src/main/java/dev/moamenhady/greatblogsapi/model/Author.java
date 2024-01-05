@@ -1,9 +1,13 @@
-package dev.moamenhady.greatblogsapi.author;
+package dev.moamenhady.greatblogsapi.model;
 
-import dev.moamenhady.greatblogsapi.post.Post;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,7 +15,7 @@ import static jakarta.persistence.FetchType.EAGER;
 
 
 @Entity
-public class Author {
+public class Author implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +27,6 @@ public class Author {
     private String username;
 
     @NotBlank(message = "password can't be blank")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&^#()\\[\\]{}<>/|+=_~`.,:;\"'\\\\-])" +
-            "[A-Za-z\\d@$!%*?&^#()\\[\\]{}<>/|+=_~`.,:;\"'\\\\-]{8,}$",
-            message = "password is not valid")
     private String password;
 
     @NotBlank(message = "email can't be blank")
@@ -34,16 +35,19 @@ public class Author {
 
     private String fullName;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String about;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = EAGER)
     private Set<Post> posts;
 
+    private String authority = "ROLE_USER";
+
     public Author() {
     }
 
-    public Author(Long id, String username, String password, String email, String fullName, String about, Set<Post> posts) {
+    public Author(Long id, String username, String password, String email, String fullName,
+                  String about, Set<Post> posts, String authority) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -51,6 +55,7 @@ public class Author {
         this.fullName = fullName;
         this.about = about;
         this.posts = posts;
+        this.authority = authority;
     }
 
 
@@ -62,9 +67,9 @@ public class Author {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
 
     public void setUsername(String name) {
         this.username = name;
@@ -86,9 +91,9 @@ public class Author {
         this.posts = posts;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -110,6 +115,28 @@ public class Author {
         this.about = about;
     }
 
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String role) {
+        this.authority = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", about='" + about + '\'' +
+                ", posts=" + posts +
+                ", authority='" + authority + '\'' +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,7 +150,8 @@ public class Author {
         if (!Objects.equals(email, author.email)) return false;
         if (!Objects.equals(fullName, author.fullName)) return false;
         if (!Objects.equals(about, author.about)) return false;
-        return Objects.equals(posts, author.posts);
+        if (!Objects.equals(posts, author.posts)) return false;
+        return Objects.equals(authority, author.authority);
     }
 
     @Override
@@ -135,19 +163,43 @@ public class Author {
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (about != null ? about.hashCode() : 0);
         result = 31 * result + (posts != null ? posts.hashCode() : 0);
+        result = 31 * result + (authority != null ? authority.hashCode() : 0);
         return result;
     }
 
+
     @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", about='" + about + '\'' +
-                ", posts=" + posts +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(authority));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
