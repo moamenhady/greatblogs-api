@@ -68,6 +68,8 @@ Access the API at http://localhost:8080/
 
 ## API Endpoints
 
+All endpoints requires user to be authenticated exept `/authors/signup`
+
 authors:
 
 - **POST /authors/signup:** Sign-up a new author account with username, password and email.
