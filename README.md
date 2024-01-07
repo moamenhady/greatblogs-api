@@ -36,7 +36,7 @@ Make sure you have the following installed on your machine:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/greatblogs-api.git
+   git clone https://github.com/moamenhady/greatblogs-api.git
    ```
    
 2. Build the project using Maven:
