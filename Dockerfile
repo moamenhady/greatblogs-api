@@ -1,8 +1,9 @@
-LABEL authors="moamenhady <moamenhady@outlook.com>"
 #ENTRYPOINT ["top", "-b"]
 
 # Use a base image with OpenJDK and Alpine Linux
 FROM eclipse-temurin:21-jre-alpine
+
+LABEL authors="moamenhady <moamenhady@outlook.com>"
 
 # Set the working directory inside the container
 WORKDIR /app
