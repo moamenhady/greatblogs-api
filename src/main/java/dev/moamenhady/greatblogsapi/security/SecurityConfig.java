@@ -16,10 +16,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .formLogin(Customizer.withDefaults())
+//                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) // To be reviewed
                 .authorizeHttpRequests(matcherRegistry -> matcherRegistry
+                        .requestMatchers("/index.html").permitAll()
                         .requestMatchers("/authors/signup").anonymous()
                         .requestMatchers("/authors/**").hasRole("USER")
                         .requestMatchers("/posts/**").hasRole("USER")
