@@ -20,10 +20,11 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) // To be reviewed
                 .authorizeHttpRequests(matcherRegistry -> matcherRegistry
+                        .requestMatchers("/").permitAll()
                         .requestMatchers("/index.html").permitAll()
-                        .requestMatchers("/authors/signup").anonymous()
-                        .requestMatchers("/authors/**").hasRole("USER")
-                        .requestMatchers("/posts/**").hasRole("USER")
+                        .requestMatchers("/api/authors/signup").anonymous()
+                        .requestMatchers("/api/authors/**").hasRole("USER")
+                        .requestMatchers("/api/posts/**").hasRole("USER")
                         .anyRequest().denyAll()
                 )
                 .build();
