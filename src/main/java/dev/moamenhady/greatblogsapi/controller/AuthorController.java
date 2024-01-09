@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/api/authors")
 public class AuthorController {
 
     private final AuthorService authorService;
