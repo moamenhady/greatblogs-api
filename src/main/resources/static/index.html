@@ -11,7 +11,7 @@
         }
 
         h1 {
-            text-align: center;
+            /*text-align: center;*/
         }
 
         h1, h2, p {
@@ -37,10 +37,12 @@
 
     <section>
         <h2>About</h2>
-        <p>This is an Open Source Spring Boot API providing access to a blog system, allowing users to signup and
+        <p>This is an Open Source Spring Boot API providing access to an authenticated blog system, allowing users to
+            signup and
             perform
             various
-            CRUD operations related to blog posts. The API is running as a Docker container on Azure Container Apps. The
+            CRUD operations related to blog posts.</p>
+            <p>The API is running as a Docker container on Azure Container Apps. The
             database used is PostgreSQL running on Azure Database for PostgreSQL - Flexible Server.</p>
     </section>
 
@@ -49,7 +51,7 @@
         <p>Created by: Moamen Hady (Backend Dev)</p>
         <p>Email: <a href="mailto:moamenhady@outlook.com">moamenhady@outlook.com</a></p>
         <p>Github: <a href="https://www.github.com/moamenhady">github.com/moamenhady</a></p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/moamenhady">linkedin.com/moamenhady</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/moamenhady">linkedin.com/in/moamenhady</a></p>
     </section>
 
     <section>
@@ -63,6 +65,52 @@
         </ul>
     </section>
 
+    <section>
+        <h2>Usage</h2>
+        <ul>
+            <li><strong>POST</strong> <em>https://greatblogs.tech/api/authors/signup</em>
+                <p>Sign-up a new author account with username, password and email.</p>
+                <br>
+            </li>
+            <li><strong>GET</strong> <em>https://greatblogs.tech/api/authors/all</em>
+                <p>Retrieve all authors by username.</p>
+                <br>
+            </li>
+            <li><strong>GET</strong> <em>https://greatblogs.tech/api/authors/{id}</em>
+                <p>Retrieve a specific author by id.</p>
+                <br>
+            </li>
+            <li><strong>PUT</strong> <em>https://greatblogs.tech/api/authors/update/{id}</em>
+                <p>Update an existing author's fullName and about.</p>
+                <br>
+            </li>
+
+
+            <li><strong>POST</strong> <em>https://greatblogs.tech/api/posts/create</em>
+                <p>Create a new blog post.</p>
+                <br>
+            </li>
+            <li><strong>GET</strong> <em>https://greatblogs.tech/api/posts/all</em>
+                <p>Retrieve all blog posts.</p>
+                <br>
+            </li>
+            <li><strong>GET</strong> <em>https://greatblogs.tech/api/posts/{id}</em>
+                <p>Retrieve a specific blog post by id.</p>
+                <br>
+            </li>
+            <li><strong>PUT</strong> <em>https://greatblogs.tech/api/posts/update/{id}</em>
+                <p>Update an existing blog post.</p>
+                <br>
+            </li>
+            <li><strong>DELETE</strong> <em>https://greatblogs.tech/api/posts//delete/{id}</em>
+                <p>Delete a blog post.</p>
+                <br>
+            </li>
+        </ul>
+        <p></p>
+        <p></p>
+        <p></p>
+    </section>
 </div>
 
 <div class="footer">
