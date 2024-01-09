@@ -68,22 +68,22 @@ Access the API at http://localhost:8080/
 
 ## API Endpoints
 
-All endpoints requires user to be authenticated exept `/authors/signup`
+All endpoints require user to be authenticated except `/authors/signup`
 
 authors:
 
-- **POST /authors/signup:** Sign-up a new author account with username, password and email.
-- **GET /authors/all:** Retrieve all authors by username.
-- **GET /authors/{id}:** Retrieve a specific author.
-- **PUT /authors/update/{id}:** Update an existing author's fullName and about.
+- **POST /api/authors/signup:** Sign-up a new author account with username, password and email.
+- **GET /api/authors/all:** Retrieve all authors by username.
+- **GET /api/authors/{id}:** Retrieve a specific author.
+- **PUT /api/authors/update/{id}:** Update an existing author's fullName and about.
 
 posts:
 
-- **POST /posts/create:** Create a new blog post.
-- **GET /posts/all:** Retrieve all blog posts.
-- **GET /posts/{id}:** Retrieve a specific blog post.
-- **PUT /posts/update/{id}:** Update an existing blog post.
-- **DELETE /posts/delete/{id}:** Delete a blog post.
+- **POST /api/posts/create:** Create a new blog post.
+- **GET /api/posts/all:** Retrieve all blog posts.
+- **GET /api/posts/{id}:** Retrieve a specific blog post.
+- **PUT /api/posts/update/{id}:** Update an existing blog post.
+- **DELETE /api/posts/delete/{id}:** Delete a blog post.
 
 ## Authentication
 
