@@ -63,8 +63,8 @@ public class AuthorController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody UpdateAuthorRequest request,
                                                Authentication authentication) {
-        Author loggedinAuthor = authorService.getAuthorByUsername(authentication.getName());
-        if (Objects.equals(id, loggedinAuthor.getId())) {
+        Optional<Author> loggedInAuthor = authorService.getAuthorByUsername(authentication.getName());
+        if (loggedInAuthor.isPresent() && Objects.equals(id, loggedInAuthor.get().getId())) {
             Author author = authorService.updateAuthor(id, request);
             return new ResponseEntity<>(author, HttpStatus.OK);
         }

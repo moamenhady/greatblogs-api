@@ -56,7 +56,7 @@ Make sure you have the following installed on your machine:
    spring.datasource.password=your_password
    ```
    
-3. Configure other properties as needed (e.g., server port, logging).
+2. Configure other properties as needed (e.g., server port, logging).
 
 ## Usage
 

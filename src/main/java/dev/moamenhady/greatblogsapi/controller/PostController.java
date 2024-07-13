@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -26,9 +27,9 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody CreatePostRequest request, Authentication authentication) {
-        Author author = authorService.getAuthorByUsername(authentication.getName());
+        Optional<Author> author = authorService.getAuthorByUsername(authentication.getName());
         try {
-            Post createdPost = postService.createPost(request, author);
+            Post createdPost = postService.createPost(request, author.orElseThrow());
             return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -76,12 +77,12 @@ public class PostController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody UpdatePostRequest request,
                                            Authentication authentication) {
-        Author loggedinAuthor = authorService.getAuthorByUsername(authentication.getName());
+        Optional<Author> loggedInAuthor = authorService.getAuthorByUsername(authentication.getName());
         Post post = postService.getPostById(id);
         if (post == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (post.getAuthor().equals(loggedinAuthor)) {
+        if (loggedInAuthor.isPresent() && post.getAuthor().equals(loggedInAuthor.get())) {
             post = postService.updatePost(id, request);
             return new ResponseEntity<>(post, HttpStatus.OK);
         }
@@ -93,12 +94,12 @@ public class PostController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id, Authentication authentication) {
-        Author loggedinAuthor = authorService.getAuthorByUsername(authentication.getName());
+        Optional<Author> loggedInAuthor = authorService.getAuthorByUsername(authentication.getName());
         Post post = postService.getPostById(id);
         if (post == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (post.getAuthor().equals(loggedinAuthor)) {
+        if (loggedInAuthor.isPresent() && post.getAuthor().equals(loggedInAuthor.get())) {
             postService.deletePost(id);
             return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
         }

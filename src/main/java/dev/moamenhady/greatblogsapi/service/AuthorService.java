@@ -20,8 +20,8 @@ public class AuthorService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Author getAuthorByUsername(String username) {
-        return authorRepository.findByUsername(username);
+    public Optional<Author> getAuthorByUsername(String username) {
+        return authorRepository.findAuthorByUsername(username);
     }
 
     public void signup(AuthorController.SignupRequest request) {
