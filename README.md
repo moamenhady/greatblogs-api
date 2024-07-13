@@ -27,7 +27,7 @@ This is a RESTful API for a simple blog engine developed using Spring Boot, Spri
 
 Make sure you have the following installed on your machine:
 
-- [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 21 or higher)
+- [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 11 or higher)
 - [Maven](https://maven.apache.org/download.cgi)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
@@ -61,7 +61,7 @@ Make sure you have the following installed on your machine:
 ## Usage
 
 ```bash
-java -jar target/greatblogs-api-1.0.0.jar
+java -jar target/greatblogs-api-1.2.2.jar
 ```
 
 Access the API at http://localhost:8080/
