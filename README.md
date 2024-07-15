@@ -27,7 +27,7 @@ This is a RESTful API for a simple blog engine developed using Spring Boot, Spri
 
 Make sure you have the following installed on your machine:
 
-- [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 11 or higher)
+- [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 17 or higher)
 - [Maven](https://maven.apache.org/download.cgi)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
