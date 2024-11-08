@@ -1,9 +1,12 @@
-package dev.moamenhady.greatblogsapi.controller;
+package dev.moamenhady.greatblogsapi.controller.post;
 
-import dev.moamenhady.greatblogsapi.model.Author;
-import dev.moamenhady.greatblogsapi.model.Post;
-import dev.moamenhady.greatblogsapi.service.PostService;
-import dev.moamenhady.greatblogsapi.service.AuthorService;
+import dev.moamenhady.greatblogsapi.dto.post.CreatePostDTO;
+import dev.moamenhady.greatblogsapi.dto.post.GetPostDTO;
+import dev.moamenhady.greatblogsapi.dto.post.UpdatePostDTO;
+import dev.moamenhady.greatblogsapi.model.person.Author;
+import dev.moamenhady.greatblogsapi.model.post.Post;
+import dev.moamenhady.greatblogsapi.service.post.PostService;
+import dev.moamenhady.greatblogsapi.service.person.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/posts/")
 public class PostController {
 
     private final PostService postService;
@@ -26,7 +29,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@RequestBody CreatePostRequest request, Authentication authentication) {
+    public ResponseEntity<Post> createPost(@RequestBody CreatePostDTO request, Authentication authentication) {
         Optional<Author> author = authorService.getAuthorByUsername(authentication.getName());
         try {
             Post createdPost = postService.createPost(request, author.orElseThrow());
@@ -36,46 +39,39 @@ public class PostController {
         }
     }
 
-    public record CreatePostRequest(String title, String content) {
-    }
-
     @GetMapping("/all")
-    public List<PostResponse> getAllPosts() {
-        List<PostResponse> responses = new ArrayList<>();
+    public List<GetPostDTO> getAllPosts() {
+        List<GetPostDTO> responses = new ArrayList<>();
         for (Post post : postService.getAllPosts()) {
-            responses.add(new PostResponse(post.getAuthor().getUsername(), post.getTitle(), post.getContent()));
+            responses.add(new GetPostDTO(post.getAuthor().getUsername(), post.getTitle(), post.getContent()));
         }
         return responses;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getPostById(@PathVariable Long id) {
+    public ResponseEntity<GetPostDTO> getPostById(@PathVariable Long id) {
         Post post = postService.getPostById(id);
         if (post != null) {
-            PostResponse postResponse = new PostResponse(post.getAuthor().getUsername(), post.getTitle(), post.getContent());
-            return new ResponseEntity<>(postResponse, HttpStatus.OK);
+            GetPostDTO getPostDTO = new GetPostDTO(post.getAuthor().getUsername(), post.getTitle(), post.getContent());
+            return new ResponseEntity<>(getPostDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/author/{authorUsername}")
-    public List<PostResponse> getPostsByAuthor(@PathVariable String authorUsername) {
-        List<PostResponse> responses = new ArrayList<>();
+    public List<GetPostDTO> getPostsByAuthor(@PathVariable String authorUsername) {
+        List<GetPostDTO> responses = new ArrayList<>();
         for (Post post : postService.getAllPosts()) {
             if (post.getAuthor().getUsername().equals(authorUsername)) {
-                responses.add(new PostResponse(authorUsername, post.getTitle(), post.getContent()));
+                responses.add(new GetPostDTO(authorUsername, post.getTitle(), post.getContent()));
             }
         }
         return responses;
     }
 
-    public record PostResponse(String username, String title, String content) {
-    }
-
-
     @PutMapping("/update/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody UpdatePostRequest request,
+    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody UpdatePostDTO request,
                                            Authentication authentication) {
         Optional<Author> loggedInAuthor = authorService.getAuthorByUsername(authentication.getName());
         Post post = postService.getPostById(id);
@@ -87,9 +83,6 @@ public class PostController {
             return new ResponseEntity<>(post, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
-
-    public record UpdatePostRequest(String title, String content) {
     }
 
     @DeleteMapping("/delete/{id}")

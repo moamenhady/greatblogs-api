@@ -1,7 +1,9 @@
-package dev.moamenhady.greatblogsapi.controller;
+package dev.moamenhady.greatblogsapi.controller.person;
 
-import dev.moamenhady.greatblogsapi.service.AuthorService;
-import dev.moamenhady.greatblogsapi.model.Author;
+import dev.moamenhady.greatblogsapi.service.person.AuthorService;
+import dev.moamenhady.greatblogsapi.model.person.Author;
+import dev.moamenhady.greatblogsapi.dto.person.SignupAuthorDTO;
+import dev.moamenhady.greatblogsapi.dto.person.UpdateAuthorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/authors")
+@RequestMapping("/api/authors/")
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -23,7 +25,7 @@ public class AuthorController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest request) {
+    public ResponseEntity<String> signup(@RequestBody SignupAuthorDTO request) {
         try {
             authorService.signup(request);
             return new ResponseEntity<>("Author successfully created", HttpStatus.CREATED);
@@ -35,10 +37,6 @@ public class AuthorController {
             }
         }
     }
-
-    public record SignupRequest(String username, String password, String email) {
-    }
-
 
     @GetMapping("/all")
     public List<String> getAllAuthors() {
@@ -61,7 +59,7 @@ public class AuthorController {
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody UpdateAuthorRequest request,
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody UpdateAuthorDTO request,
                                                Authentication authentication) {
         Optional<Author> loggedInAuthor = authorService.getAuthorByUsername(authentication.getName());
         if (loggedInAuthor.isPresent() && Objects.equals(id, loggedInAuthor.get().getId())) {
@@ -69,9 +67,6 @@ public class AuthorController {
             return new ResponseEntity<>(author, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
-
-    public record UpdateAuthorRequest(String fullName, String about) {
     }
 
 }

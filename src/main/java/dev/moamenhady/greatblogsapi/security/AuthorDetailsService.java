@@ -1,6 +1,6 @@
 package dev.moamenhady.greatblogsapi.security;
 
-import dev.moamenhady.greatblogsapi.repository.AuthorRepository;
+import dev.moamenhady.greatblogsapi.repository.person.AuthorRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

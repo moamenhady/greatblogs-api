@@ -1,6 +1,6 @@
-package dev.moamenhady.greatblogsapi.repository;
+package dev.moamenhady.greatblogsapi.repository.post;
 
-import dev.moamenhady.greatblogsapi.model.Post;
+import dev.moamenhady.greatblogsapi.model.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

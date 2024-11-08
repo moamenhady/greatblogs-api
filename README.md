@@ -18,7 +18,7 @@ This is a RESTful API for a simple blog engine developed using Spring Boot, Spri
 
 - Create, read, update, and delete blog posts.
 - User authentication using Basic Authentication.
-- Secure password storage using bcrypt.
+- Secure password storage using Bcrypt.
 - Persistent storage of blog data in a PostgreSQL database.
 
 ## Getting Started
@@ -27,7 +27,7 @@ This is a RESTful API for a simple blog engine developed using Spring Boot, Spri
 
 Make sure you have the following installed on your machine:
 
-- [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 17 or higher)
+- [Java](https://www.oracle.com/java/technologies/javase-downloads.html) (version 21)
 - [Maven](https://maven.apache.org/download.cgi)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
@@ -48,12 +48,12 @@ Make sure you have the following installed on your machine:
 
 #### Configuration
 
-1. Configure the database connection in `src/main/resources/application.properties`:
+1. Configure the database connection in `src/main/resources/application.yml`:
 
    ```properties
-   spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
+   url: jdbc:postgresql://localhost:5432/your_database
+   username: your_username
+   password: your_password
    ```
    
 2. Configure other properties as needed (e.g., server port, logging).
@@ -61,7 +61,7 @@ Make sure you have the following installed on your machine:
 ## Usage
 
 ```bash
-java -jar target/greatblogs-api-1.2.2.jar
+java -jar target/greatblogs-api-1.2.3.jar
 ```
 
 Access the API at http://localhost:8080/

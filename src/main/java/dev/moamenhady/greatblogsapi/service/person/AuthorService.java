@@ -1,8 +1,9 @@
-package dev.moamenhady.greatblogsapi.service;
+package dev.moamenhady.greatblogsapi.service.person;
 
-import dev.moamenhady.greatblogsapi.controller.AuthorController;
-import dev.moamenhady.greatblogsapi.repository.AuthorRepository;
-import dev.moamenhady.greatblogsapi.model.Author;
+import dev.moamenhady.greatblogsapi.repository.person.AuthorRepository;
+import dev.moamenhady.greatblogsapi.model.person.Author;
+import dev.moamenhady.greatblogsapi.dto.person.SignupAuthorDTO;
+import dev.moamenhady.greatblogsapi.dto.person.UpdateAuthorDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class AuthorService {
         return authorRepository.findAuthorByUsername(username);
     }
 
-    public void signup(AuthorController.SignupRequest request) {
+    public void signup(SignupAuthorDTO request) {
 
         validateUsername(request.username());
         validatePassword(request.password());
@@ -82,7 +83,7 @@ public class AuthorService {
     }
 
 
-    public Author updateAuthor(Long id, AuthorController.UpdateAuthorRequest request) {
+    public Author updateAuthor(Long id, UpdateAuthorDTO request) {
         Optional<Author> author = authorRepository.findById(id);
         if (author.isPresent()) {
             author.get().setFullName(request.fullName());

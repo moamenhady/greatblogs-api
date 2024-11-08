@@ -1,9 +1,10 @@
-package dev.moamenhady.greatblogsapi.service;
+package dev.moamenhady.greatblogsapi.service.post;
 
-import dev.moamenhady.greatblogsapi.controller.PostController;
-import dev.moamenhady.greatblogsapi.model.Author;
-import dev.moamenhady.greatblogsapi.model.Post;
-import dev.moamenhady.greatblogsapi.repository.PostRepository;
+import dev.moamenhady.greatblogsapi.dto.post.CreatePostDTO;
+import dev.moamenhady.greatblogsapi.dto.post.UpdatePostDTO;
+import dev.moamenhady.greatblogsapi.model.person.Author;
+import dev.moamenhady.greatblogsapi.model.post.Post;
+import dev.moamenhady.greatblogsapi.repository.post.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Post createPost(PostController.CreatePostRequest request, Author author) {
+    public Post createPost(CreatePostDTO request, Author author) {
 
         Post post = new Post();
         post.setAuthor(author);
@@ -36,7 +37,7 @@ public class PostService {
     }
 
 
-    public Post updatePost(Long id, PostController.UpdatePostRequest request) {
+    public Post updatePost(Long id, UpdatePostDTO request) {
         if (postRepository.existsById(id)) {
             Post post = postRepository.findPostById(id);
             post.setTitle(request.title());
